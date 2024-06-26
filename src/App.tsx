@@ -1,14 +1,10 @@
-import ListGroup from "./components/ListGroup";
+import Alert from "./components/Alert";
 
 function App() {
-  let items = ["pune", "mumbai", "latur", "Nashik"];
-
-  const handleClick = (item: string) => {
-    console.log(item);
-  };
-
   return (
-    <ListGroup items={items} heading="Cities" onSelectItem={handleClick} />
+    <Alert>
+      Hello world <span>sachin</span>
+    </Alert>
   );
 }
 
