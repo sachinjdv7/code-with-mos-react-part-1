@@ -1,20 +1,24 @@
 import { useState } from "react";
 
 function App() {
-  const [tag, setTag] = useState(["sachin", "nitin"]);
+  const [bug, setBug] = useState([
+    {
+      id: 1,
+      title: "bug1",
+      fixed: false,
+    },
+    {
+      id: 2,
+      title: "bug2",
+      fixed: false,
+    },
+  ]);
 
   const handleClick = () => {
-    // Add
-    setTag([...tag, "suyash"]);
-    // remove
-    setTag(tag.filter((t) => t !== "sachin"));
-
-    // udpate
-    setTag(tag.map((t) => (t === "nitin" ? "vipul" : t)));
+    setBug(bug.map((b) => (b.id === 1 ? { ...b, fixed: true } : b)));
   };
   return (
     <div>
-      {tag[3]}
       <button onClick={handleClick}>Click Me</button>
     </div>
   );
