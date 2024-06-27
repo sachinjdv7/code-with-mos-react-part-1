@@ -1,20 +1,20 @@
 import { useState } from "react";
 
 function App() {
-  const [drink, setDrink] = useState({
-    title: "orange juice",
-    price: 11,
-    categorie: {
-      vegPrice: 200,
-      nonVegPrice: 500,
-    },
-  });
+  const [tag, setTag] = useState(["sachin", "nitin"]);
+
   const handleClick = () => {
-    setDrink({ ...drink, categorie: { ...drink.categorie, nonVegPrice: 505 } });
+    // Add
+    setTag([...tag, "suyash"]);
+    // remove
+    setTag(tag.filter((t) => t !== "sachin"));
+
+    // udpate
+    setTag(tag.map((t) => (t === "nitin" ? "vipul" : t)));
   };
   return (
     <div>
-      {drink.categorie.nonVegPrice}
+      {tag[3]}
       <button onClick={handleClick}>Click Me</button>
     </div>
   );
