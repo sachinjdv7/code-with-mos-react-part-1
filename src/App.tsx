@@ -4,13 +4,17 @@ function App() {
   const [drink, setDrink] = useState({
     title: "orange juice",
     price: 11,
+    categorie: {
+      vegPrice: 200,
+      nonVegPrice: 500,
+    },
   });
   const handleClick = () => {
-    setDrink({ ...drink, price: 12 });
+    setDrink({ ...drink, categorie: { ...drink.categorie, nonVegPrice: 505 } });
   };
   return (
     <div>
-      {drink.price}
+      {drink.categorie.nonVegPrice}
       <button onClick={handleClick}>Click Me</button>
     </div>
   );
