@@ -27,10 +27,16 @@ const ExpenseForm = ({ onSubmit }: Props) => {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<expenseFormData>({ resolver: zodResolver(schema) });
   return (
-    <form onSubmit={handleSubmit((data) => onSubmit(data))}>
+    <form
+      onSubmit={handleSubmit((data) => {
+        onSubmit(data);
+        reset();
+      })}
+    >
       <div className="mb-3">
         <label htmlFor="description" className="form-label">
           Description
