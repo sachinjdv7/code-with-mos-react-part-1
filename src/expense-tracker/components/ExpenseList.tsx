@@ -1,5 +1,3 @@
-import React from "react";
-
 interface Expenses {
   id: number;
   description: string;
@@ -12,7 +10,7 @@ interface Props {
   onDelete: (id: number) => void;
 }
 
-const Expense = ({ expenses, onDelete }: Props) => {
+const ExpenseList = ({ expenses, onDelete }: Props) => {
   if (expenses.length === 0) return null;
   return (
     <table className="table table-bordered">
@@ -53,4 +51,4 @@ const Expense = ({ expenses, onDelete }: Props) => {
   );
 };
 
-export default Expense;
+export default ExpenseList;
