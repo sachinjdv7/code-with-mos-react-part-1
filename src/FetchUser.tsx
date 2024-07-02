@@ -1,5 +1,5 @@
-import axios, { CanceledError } from "axios";
 import React, { useEffect, useState } from "react";
+import apiClient, { CanceledError } from "./services/api-client";
 
 interface User {
   id: number;
@@ -10,11 +10,13 @@ const FetchUser = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const controller = new AbortController();
     setIsLoading(true);
-    axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/users", {
+
+    apiClient
+      .get<User[]>("/users", {
         signal: controller.signal,
       })
       .then((res) => {
@@ -33,12 +35,11 @@ const FetchUser = () => {
   const deleteUser = (user: User) => {
     const originalUser = [...users];
     setUsers(users.filter((u) => u.id !== user.id));
-    axios
-      .delete("https://jsonplaceholder.typicode.com/users/" + user.id)
-      .catch((error) => {
-        setError(error.message);
-        setUsers(originalUser);
-      });
+
+    apiClient.delete("/users/" + user.id).catch((error) => {
+      setError(error.message);
+      setUsers(originalUser);
+    });
   };
 
   const addUser = () => {
@@ -48,8 +49,9 @@ const FetchUser = () => {
       name: "sachin",
     };
     setUsers([newUser, ...users]);
-    axios
-      .post("https://jsonplaceholder.typicode.com/users", newUser)
+
+    apiClient
+      .post("/users", newUser)
       .then((res) => setUsers([res.data, ...users]))
       .catch((error) => {
         setError(error.message);
@@ -60,17 +62,15 @@ const FetchUser = () => {
   const updateUser = (user: User) => {
     const originalUser = [...users];
     const updatedUser = { ...user, name: user.name + "!!" };
+
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
-    axios
-      .patch(
-        "https://jsonplaceholder.typicode.com/users/" + user.id,
-        updateUser
-      )
-      .catch((error) => {
-        setError(error.message);
-        setUsers(originalUser);
-      });
+
+    apiClient.patch("/users/" + user.id, updateUser).catch((error) => {
+      setError(error.message);
+      setUsers(originalUser);
+    });
   };
+
   return (
     <div>
       {error && <p className="text-danger">{error}</p>}
