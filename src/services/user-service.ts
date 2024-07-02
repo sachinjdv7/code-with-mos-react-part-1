@@ -5,7 +5,7 @@ export interface User {
   name: string;
 }
 
-class userService {
+class UserService {
   getAllUsers() {
     const controller = new AbortController();
     const request = apiClient.get<User[]>("/users", {
@@ -27,4 +27,4 @@ class userService {
   }
 }
 
-export default new userService();
+export default new UserService();

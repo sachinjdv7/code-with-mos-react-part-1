@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CanceledError } from "./services/api-client";
-import userService, { User } from "./services/user-service";
+import UserService, { User } from "./services/user-service";
 
 const FetchUser = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -10,7 +10,7 @@ const FetchUser = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    const { request, cancle } = userService.getAllUsers();
+    const { request, cancle } = UserService.getAllUsers();
     request
       .then((res) => {
         setUsers(res.data);
@@ -29,7 +29,7 @@ const FetchUser = () => {
     const originalUser = [...users];
     setUsers(users.filter((u) => u.id !== user.id));
 
-    userService.deleteUser(user.id).catch((error) => {
+    UserService.deleteUser(user.id).catch((error) => {
       setError(error.message);
       setUsers(originalUser);
     });
@@ -43,8 +43,7 @@ const FetchUser = () => {
     };
     setUsers([newUser, ...users]);
 
-    userService
-      .createUser(newUser)
+    UserService.createUser(newUser)
       .then((res) => setUsers([res.data, ...users]))
       .catch((error) => {
         setError(error.message);
@@ -58,7 +57,7 @@ const FetchUser = () => {
 
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
 
-    userService.updateUser(updatedUser).catch((error) => {
+    UserService.updateUser(updatedUser).catch((error) => {
       setError(error.message);
       setUsers(originalUser);
     });
